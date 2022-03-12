@@ -1,15 +1,14 @@
 <template>
-
   <div>
-    <div class="title">国内疫情地图</div>
+    <div class="title">世界疫情地图</div>
     <!-- 地图容器 -->
     <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
     <van-tabs v-model="active" animated @change='change'>
       <van-tab title="现存确诊">
-        <div id="nowMain" style="width: 7.5rem; height: 7rem"></div>
+        <div id="worldNowMain" style="width: 7.5rem; height: 7rem"></div>
       </van-tab>
       <van-tab title="累计确诊">
-        <div id="main" style="width: 7.5rem; height: 7rem"></div>
+        <div id="worldMain" style="width: 7.5rem; height: 7rem"></div>
       </van-tab>
     </van-tabs>
 
@@ -30,7 +29,7 @@ export default {
     console.log('this',this)
     //this.$myChart.line('main');
     //this.$myChart.chinaMap('main')
-      this.getChinaData();
+    this.getWorldData()
     /*// 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));
 
@@ -60,36 +59,39 @@ export default {
     myChart.setOption(option);*/
   },
   methods:{
-    getChinaData(){
+    getWorldData(){
       //获取疫情数据-----------------------------------------------
-      api.getChinaData().then((res) => {
-        console.log("-------", res.data);
-        //获取省份数据
-        let citys = res.data.retdata;
-        if(!citys){
-          this.$myChart.chinaMap("nowMain", []);
+      api.getWorldData().then((res) => {
+        console.log("---世界的数据----", res.data.retdata.globalList);
+        //获取世界数据
+        let globalList = res.data.retdata.globalList;
+        if(!globalList){
           return;
         }
         let arr = []; //累计
         let nowArr = []; //现存
-        for (let i = 0; i < citys.length; i++) {
-          let obj = {};
-          obj.name = citys[i].xArea;
-          obj.value = citys[i].confirm; //累计确诊人数   curConfirm现在确诊人数
-          let now = {};
-          now.name = citys[i].xArea;
-          now.value = citys[i].curConfirm;
-          arr.push(obj);
-          nowArr.push(now);
+        for(let k=0;k<globalList.length;k++){
+          let subList=globalList[k].subList;
+          for (let i = 0; i < subList.length; i++) {
+            let obj = {};
+            obj.name = subList[i].country;
+            obj.value = subList[i].confirm; //累计确诊人数   curConfirm现在确诊人数
+            let now = {};
+            now.name = subList[i].country;
+            now.value = subList[i].curConfirm;
+            arr.push(obj);
+            nowArr.push(now);
+          }
         }
+
         this.arr = arr;
-        console.log("省份的数据", arr);
+        console.log("处理好的世界的数据", arr);
         //vue里面 等待延迟加载
         this.$nextTick(()=>{
           //显示累计地图
           // this.$myChart.chinaMap("main", arr);
           //显示现存地图
-          this.$myChart.chinaMap("nowMain", nowArr);
+          this.$myChart.worldMap("worldNowMain", nowArr);
         })
       });
       //显示地图  data=[{ name: '内蒙古', value: 200 },{name:'',value:''}]
@@ -101,11 +103,11 @@ export default {
       //alert(title)
       if (title === 0) {
         this.$nextTick(() => {
-          this.$myChart.chinaMap("nowMain", this.arr);
+          this.$myChart.worldMap("worldNowMain", this.arr);
         });
       }else{
         this.$nextTick(() => {
-          this.$myChart.chinaMap("main", this.arr);
+          this.$myChart.worldMap("worldMain", this.arr);
         });
       }
     }

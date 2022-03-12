@@ -31,6 +31,8 @@
     <CovNumber :covData="covData" />
     <!--中国地图-->
     <china-map></china-map>
+    <!--世界地图-->
+    <world-map></world-map>
   </div>
 
 </template>
@@ -41,9 +43,10 @@ import CovNumber from '../components/Covinfo/CovNumber'
 import api from '../api/index'
 import Area from '../components/Area/Area'
 import ChinaMap from '../components/ChinaMap/ChinaMap'
+import WorldMap from '../components/WorldMap/WorldMap'
 export default {
   name: 'App',
-  components: {Covinfo,CovNumber,Area,ChinaMap},
+  components: {Covinfo,CovNumber,Area,ChinaMap,WorldMap},
   data(){
     return  {
       covDesc:{},

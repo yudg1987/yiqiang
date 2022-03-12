@@ -4,6 +4,7 @@ import HeSuan from '../components/Hesuan/Hesuan'
 import Home from './Home'
 import Area from '../components/Area/Area'
 import fangyi from '../components/fangyi/fangyi'
+import ProvinceInfo from '../components/ProvinceInfo/ProvinceInfo'
 
 Vue.use(Router)
 
@@ -24,6 +25,11 @@ export default new Router({
          {
            path: '/fangyi',
            component :fangyi
+         },
+         {
+           path: '/province/:name',
+           component :ProvinceInfo,
+           props: true
          },
        ]
 })
