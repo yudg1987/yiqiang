@@ -1,7 +1,12 @@
 <template>
   <div id="home" class="home">
     <!-- 1. 疫情图片 -->
-    <img src="../assets/images/logo.png" width="100%" alt="" />
+    <div class="logo">
+      <img src="../assets/images/logo.png" width="100%" alt="" />
+      <!-- 点击进入城市选择 -->
+      <router-link class="select" to="/selectCity">{{ city }}=</router-link>
+    </div>
+
     <!--2.疫情信息-->
     <Covinfo :covDesc="covDesc" :news="news"></Covinfo>
     <!-- 3. 疫情-小导航 -->
@@ -23,7 +28,7 @@
         <div>防疫物资</div>
       </div>
       <div>
-        <img src="../assets/images/4.png" alt="" />
+        <img src="../assets/images/4.png" alt="" @click="$router.push('/travel')" />
         <div>出行政策</div>
       </div>
     </div>
@@ -33,6 +38,8 @@
     <china-map></china-map>
     <!--世界地图-->
     <world-map></world-map>
+    <!--swipper轮播图-->
+    <vue-swipper></vue-swipper>
   </div>
 
 </template>
@@ -44,17 +51,26 @@ import api from '../api/index'
 import Area from '../components/Area/Area'
 import ChinaMap from '../components/ChinaMap/ChinaMap'
 import WorldMap from '../components/WorldMap/WorldMap'
+import VueSwipper from './VueSwipper/VueSwipper'
 export default {
   name: 'App',
-  components: {Covinfo,CovNumber,Area,ChinaMap,WorldMap},
+  components: {Covinfo,CovNumber,Area,ChinaMap,WorldMap,VueSwipper},
   data(){
     return  {
       covDesc:{},
       news:[],
-      covData: {}//全国数据统计
+      covData: {},//全国数据统计
+      city: "国内疫情"
     }
   },
   created () {
+    //方式1：进入页面获取本地存储
+     let city = localStorage.getItem('city')
+    //alert(city)
+     if(city){
+       this.city = city+'疫情';
+     }
+
     //请求病毒接口-----------------
     api.getCovInfo().then((res) => {
       console.log('疫情数据',res.data.newslist[0]);

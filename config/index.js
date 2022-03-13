@@ -10,7 +10,26 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    //跨域代理配置
+    proxyTable: {
+      '/api': {
+        target: 'http://apis.juhe.cn',//聚合接口地址
+        ws: true,
+        changeOrigin: true,
+        pathRewrite:{//重写路径
+          '^/api':''
+        }
+      },
+      //360接口
+      '/foo': {
+        target: 'https://bang.360.cn',//
+        ws: true,
+        changeOrigin: true,
+        pathRewrite:{//重写路径
+          '^/foo':''
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

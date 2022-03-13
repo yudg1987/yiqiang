@@ -16,6 +16,12 @@ import    './plugin/vant'
 import  echarts from './plugin/echarts'
 Vue.use(echarts)
 
+//引入轮播图swipper
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+// import style (<= Swiper 5.x)
+import 'swiper/css/swiper.css'
+Vue.use(VueAwesomeSwiper)
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

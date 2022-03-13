@@ -5,6 +5,8 @@ import Home from './Home'
 import Area from '../components/Area/Area'
 import fangyi from '../components/fangyi/fangyi'
 import ProvinceInfo from '../components/ProvinceInfo/ProvinceInfo'
+import Travel from '../components/Travel/Travel'
+import SelectCity from '../components/SelectCity/SelectCity'
 
 Vue.use(Router)
 
@@ -31,5 +33,15 @@ export default new Router({
            component :ProvinceInfo,
            props: true
          },
+         {
+           path: '/travel',
+           component :Travel,
+           props: true
+         },
+         {
+           path:'/selectCity',
+           name:'SelectCity',
+           component:SelectCity
+         }
        ]
 })

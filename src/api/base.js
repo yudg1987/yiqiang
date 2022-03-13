@@ -12,10 +12,11 @@ const base = {
   //format=json&appid=6938&city_name=城市名称&sign=md5加密字符串
   allData: '/api/94/222?format=json&appid=6938&sign=687569b1fd450f3491cd6e72f82aacf7',//全球接口
   swiperBanner: 'http://iwenwiki.com/wapicovid19/ncovimg.php',//轮播图疫情
-  // travel:'http://apis.juhe.cn/springTravel/citys?key=171e165a7d991c5f6ecd5194c54778ef',
+  //travel接口需要配置跨域
+  //travel:'http://apis.juhe.cn/springTravel/citys?key=171e165a7d991c5f6ecd5194c54778ef',
   travel: '/api/springTravel/citys?key=171e165a7d991c5f6ecd5194c54778ef',
   travelQuery: '/api/springTravel/query?key=171e165a7d991c5f6ecd5194c54778ef',//城市疫情&from=10191&to=10349
   //360接口地址：https://bang.360.cn/aj/getcitycode
-  //getcity: '/foo/aj/getcitycode',
+  getcity: '/foo/aj/getcitycode',
 }
 export default base
